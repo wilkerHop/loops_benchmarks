@@ -114,10 +114,9 @@ const markers = async arr => {
         const arr4 = [...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3,]
 
         const test = async a => {
-            const k = a.length
             for (let j = 0; j < 5; j++) {
                 await markers(a)
-                console.log(i, k, j)
+                console.log(i, a.length, j)
             }
         }
 

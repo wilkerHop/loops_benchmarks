@@ -7,11 +7,16 @@ const benchmarker = async (f, name, arr) => {
 
     const benchmark = JSON.parse(await fs.readFileSync('./data/benchmark.json'))
 
-    if (!benchmark[name]) benchmark[name] = []
-    benchmark[name].push({
-        arrayLength: arr.length,
+    if (!benchmark[name]) {
+        benchmark[name] = {}
+        if (!benchmark[name][arr.length])
+            benchmark[name][arr.length] = []
+    }
+    benchmark[name][arr.length].push({
         end, start,
-        millestone: end - start
+        arrayLength: arr.length,
+        millestone: end - start,
+        rating: arr.length / (end - start),
     })
 
     fs.writeFileSync('./data/benchmark.json', JSON.stringify(benchmark))

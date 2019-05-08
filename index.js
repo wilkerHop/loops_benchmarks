@@ -7,7 +7,7 @@ const benchmarker = async (f, name, arr) => {
 
     const benchmark = JSON.parse(await fs.readFileSync('./data/benchmark.json'))
 
-    if (!benchmark[name]) 
+    if (!benchmark[name])
         benchmark[name] = {}
 
     if (!benchmark[name][arr.length])
@@ -112,10 +112,12 @@ const markers = async arr => {
         const arr2 = [...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1,]
         const arr3 = [...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2,]
         const arr4 = [...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3,]
-        
-        const test = async a=>{
+
+        const test = async a => {
+            const k = a.length
             for (let j = 0; j < 5; j++) {
                 await markers(a)
+                console.log(i, k, j)
             }
         }
 

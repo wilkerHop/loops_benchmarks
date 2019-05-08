@@ -7,11 +7,12 @@ const benchmarker = async (f, name, arr) => {
 
     const benchmark = JSON.parse(await fs.readFileSync('./data/benchmark.json'))
 
-    if (!benchmark[name]) {
+    if (!benchmark[name]) 
         benchmark[name] = {}
-        if (!benchmark[name][arr.length])
-            benchmark[name][arr.length] = []
-    }
+
+    if (!benchmark[name][arr.length])
+        benchmark[name][arr.length] = []
+
     benchmark[name][arr.length].push({
         end, start,
         arrayLength: arr.length,
@@ -20,8 +21,6 @@ const benchmarker = async (f, name, arr) => {
     })
 
     fs.writeFileSync('./data/benchmark.json', JSON.stringify(benchmark))
-
-    // console.log(name, `took ${end - start}ms`)
 }
 
 const markers = async arr => {
@@ -78,7 +77,7 @@ const markers = async arr => {
         }
     }, 'for of with iterable declaration', arr)
 
-    // for of with generator and iterable declaration
+    // for of with generator and iterable declaration with for in
     await benchmarker(() => {
         const it3 = (function* () {
             for (let i in arr) {
@@ -89,7 +88,18 @@ const markers = async arr => {
         for (const number of it3) {
             newArr.push(number * 2)
         }
-    }, 'for of with generator and iterable declaration', arr)
+    }, 'for of with generator and iterable declaration with for in', arr)
+
+    // for of with generator and iterable declaration with yield*
+    await benchmarker(() => {
+        const it4 = (function* () {
+            yield* arr;
+        })()
+        const newArr = []
+        for (const number of it4) {
+            newArr.push(number * 2)
+        }
+    }, 'for of with generator and iterable declaration with yield*', arr)
 }
 
 (async () => {
@@ -98,14 +108,35 @@ const markers = async arr => {
         toughness.push(i)
         var arr = toughness;
 
-        arr = [...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr,]
-        arr = [...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr,]
-        arr = [...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr,]
-        arr = [...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr,]
+        const arr1 = [...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr,]
+        const arr2 = [...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1,]
+        const arr3 = [...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2,]
+        const arr4 = [...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3,]
+        
+        const test = async a=>{
+            for (let j = 0; j < 5; j++) {
+                await markers(a)
+            }
+        }
 
-        for (let j = 0; j < 5; j++) {
-            console.log(i, j)
-            await markers(arr)
+        while (arr4.length) {
+            await test(arr4)
+            arr4.pop()
+        }
+
+        while (arr3.length) {
+            await test(arr3)
+            arr3.pop()
+        }
+
+        while (arr2.length) {
+            await test(arr2)
+            arr4.pop()
+        }
+
+        while (arr1.length) {
+            await test(arr1)
+            arr3.pop()
         }
     }
 })()

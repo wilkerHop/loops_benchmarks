@@ -106,12 +106,12 @@ const markers = async arr => {
     const toughness = [];
     for (let i = 1; i < 51; i++) {
         toughness.push(i)
-        var arr = toughness;
+        const arr = toughness;
 
-        const arr1 = [...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr,]
-        const arr2 = [...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1,]
-        const arr3 = [...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2,]
-        const arr4 = [...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3,]
+        let arr1 = [...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr,]
+        let arr2 = [...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1, ...arr1,]
+        let arr3 = [...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2, ...arr2,]
+        let arr4 = [...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3, ...arr3,]
 
         const test = async a => {
             for (let j = 0; j < 5; j++) {
@@ -119,25 +119,28 @@ const markers = async arr => {
                 console.log(i, a.length, j)
             }
         }
-
+        let divisor = -arr4.length / 21;
         while (arr4.length) {
             await test(arr4)
-            arr4.pop()
+            arr4 = arr4.slice(0, divisor)
         }
 
+        divisor = -arr3.length / 21;
         while (arr3.length) {
             await test(arr3)
-            arr3.pop()
+            arr3 = arr3.slice(0, divisor)
         }
 
+        divisor = -arr2.length / 21;
         while (arr2.length) {
             await test(arr2)
-            arr4.pop()
+            arr2 = arr2.slice(0, divisor)
         }
 
+        divisor = -arr1.length / 21;
         while (arr1.length) {
             await test(arr1)
-            arr3.pop()
+            arr1 = arr1.slice(0, divisor)
         }
     }
 })()
